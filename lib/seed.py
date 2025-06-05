@@ -26,3 +26,5 @@ dev2 =Dev(name="elliot")
 freebie1 = Freebie(item_name="Tshirt", value=3,dev=dev1,company=company1)
 freebie2 = Freebie(item_name="water bottle", value=4,dev=dev2,company=company2)
 
+sesseion.add_all([company1,company2,dev1,dev2,freebie1,freebie2])
+session.commit()
