@@ -16,9 +16,24 @@ class Company(Base):
     name = Column(String())
     founding_year = Column(Integer())
 
+    freebies = relationship('Freebie', backref='company')
+    devs =relationship('Dev',secondary='freebies',backref='companies')
+
     def __repr__(self):
         return f'<Company {self.name}>'
 
+    def give_freebie(self,dev,item_name,value):
+        new_freebie = Freebie(
+            item_name=item_name,
+            value=value,
+            dev=dev,
+            company=self
+        )
+        return new_freebie
+    @classmethod
+    def oldest_company(cls):
+        return sesseion.query(cls).order_by(cls.founding_year).first()
+        
 class Dev(Base):
     __tablename__ = 'devs'
 
@@ -27,3 +42,6 @@ class Dev(Base):
 
     def __repr__(self):
         return f'<Dev {self.name}>'
+
+
+
