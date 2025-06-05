@@ -11,3 +11,7 @@ Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 session = Session()
 
+session.query(Freebie).delete()
+session.query(Company).delete()
+session.query(Dev).delete()
+session.commit()
