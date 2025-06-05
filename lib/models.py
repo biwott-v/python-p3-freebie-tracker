@@ -33,15 +33,29 @@ class Company(Base):
     @classmethod
     def oldest_company(cls):
         return sesseion.query(cls).order_by(cls.founding_year).first()
-        
+
 class Dev(Base):
     __tablename__ = 'devs'
 
     id = Column(Integer(), primary_key=True)
     name= Column(String())
 
+    freebies = relationship('Freebie', backref='dev')
+
     def __repr__(self):
         return f'<Dev {self.name}>'
+    
+    def received_one(self, item_name):
+        for freebie in self.freebies:
+            if freebie.item_name == item_name:
+                return True
+        return False
+    
+    def give_away(self, other_dev, freebie):
+        if freebie.dev_id == self.id:
+            freebie.dev = other_dev
+            return True
+        return False
 
 
 
